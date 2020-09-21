@@ -1,0 +1,16 @@
+
+docker-compose up -d
+docker-compose exec app composer install
+docker-compose exec app php artisan key:generate
+docker-compose exec app php artisan migrate --seed
+docker-compose run --rm npm install
+docker-compose run --rm npm run dev
+
+docker-compose exec app composer update
+
+docker-compose down
+
+
+sudo service mysql status
+sudo service mysql stop
+sudo service mysql start
