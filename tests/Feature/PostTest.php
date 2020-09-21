@@ -27,7 +27,7 @@ class PostTest extends TestCase
 
     public function testUserCanCreatePost()
     {
-        $this->actingAs(User::find(1))
+        $this->actingAs(User::find(2))
             ->post('/posts', [
                 'title' => 'title',
                 'score' => 1000,
@@ -43,5 +43,24 @@ class PostTest extends TestCase
         $this->actingAs(User::find(1))
             ->delete('/posts/' . $post->id)
             ->assertStatus(204);
+    }
+
+    public function testGuestCannotCreatePost()
+    {
+        $this->post('/posts', [
+                'title' => 'new title',
+                'score' => 2000,
+                'link' => '/r/subreddit/title',
+                'group_id' => 1
+            ])
+            ->assertStatus(403);
+    }
+
+    public function testUserCannotDeletePost()
+    {
+        $post = Post::latest()->first();
+        $this->actingAs(User::find(2))
+            ->delete('/posts/' . $post->id)
+            ->assertStatus(403);
     }
 }
