@@ -17,7 +17,7 @@ class CreatePostsTable extends Migration
             $table->id();
             $table->string('title')->unique();
             $table->integer('score');
-            $table->string('link');
+            $table->string('link')->unique();
             $table->foreignId('group_id')->constrained('groups');
             $table->timestamps();
         });
