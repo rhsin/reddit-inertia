@@ -31,3 +31,5 @@ Route::resources([
     'users' => UserController::class
 ]);
 
+Route::get('/dailyposts', [HomeController::class, 'dailyposts']);
+
