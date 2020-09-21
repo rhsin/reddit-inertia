@@ -45,7 +45,7 @@ class GroupController extends Controller
     public function update(Request $request, $id)
     {   
         $group = Group::find($id);
-        // $this->authorize('update', $group);
+        $this->authorize('user', $group);
         $validatedData = $request->validate([
             'name' => ['required', 'unique:groups', 'min:3'],
             'size' => ['integer', 'max:6']
@@ -63,7 +63,7 @@ class GroupController extends Controller
     public function destroy($id)
     {
         $group = Group::find($id);
-        // $this->authorize('delete', $group);
+        $this->authorize('user', $group);
         $group->delete();
         return response('Deleted!', 204);
     }

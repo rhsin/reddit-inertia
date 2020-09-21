@@ -47,4 +47,24 @@ class GroupTest extends TestCase
             ->delete('/groups/' . $group->id)
             ->assertStatus(204);
     }
+
+    public function testGuestCannotCreateGroup()
+    {
+        $this->post('/groups', ['name' => 'news'])
+            ->assertStatus(403);
+    }
+
+    public function testGuestCannotUpdateGroup()
+    {
+        $group = Group::latest()->first();
+        $this->put('/groups/' . $group->id, ['name' => 'pics'])
+            ->assertStatus(403);
+    }
+
+    public function testGuestCannotDeleteGroup()
+    {
+        $group = Group::latest()->first();
+        $this->delete('/groups/' . $group->id)
+            ->assertStatus(403);
+    }
 }

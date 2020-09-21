@@ -19,9 +19,10 @@ class UserTest extends TestCase
         ]);
     }
 
-    public function testGuestCannotRetrieveUsers()
+    public function testUserCanViewDashboard()
     {
-        $this->get('/users')->assertStatus(403);
+        $this->actingAs(User::find(2))->get('/dashboard')
+            ->assertStatus(200);
     }
 
     public function testUserCanRetrieveUsers()
@@ -46,5 +47,31 @@ class UserTest extends TestCase
         $this->actingAs($user)
             ->delete('/users/' . $user->id)
             ->assertStatus(204);
+    }
+
+    public function testGuestRedirectedFromDashboard()
+    {
+        $this->get('/dashboard')->assertStatus(302);
+    }
+
+    public function testGuestCannotRetrieveUsers()
+    {
+        $this->get('/users')->assertStatus(403);
+    }
+
+    public function testGuestCannotUpdateUser()
+    {
+        $user = User::factory()->create();
+        $this->put('/users/' . $user->id, [
+                'name' => 'John Doe', 'email' => 'john@test.com'
+            ])
+            ->assertStatus(403);
+    }
+
+    public function testGuestCannotDeleteUser()
+    {
+        $user = User::latest()->first();
+        $this->delete('/users/' . $user->id)
+            ->assertStatus(403);
     }
 }
