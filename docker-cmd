@@ -11,6 +11,8 @@ docker-compose exec app composer update
 docker-compose down
 
 
+docker-compose exec app php artisan test
+
 sudo service mysql status
 sudo service mysql stop
 sudo service mysql start

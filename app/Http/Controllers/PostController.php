@@ -13,20 +13,9 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
     public function index()
     {
         return PostResource::collection(Post::all());
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -37,41 +26,15 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Post $post)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Post $post)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Post $post)
-    {
-        //
+        $this->authorize('user', Post::class);
+        $validatedData = $request->validate([
+            'title' => ['required', 'unique:posts', 'min:3'],
+            'score' => ['required', 'integer'],
+            'link' => ['required', 'unique:posts', 'min:5'],
+            'group_id' => ['required', 'integer']
+        ]);
+        Post::create($validatedData);
+        return response('Created!', 201);
     }
 
     /**
@@ -80,8 +43,10 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy($id)
     {
-        //
+        $this->authorize('admin', Post::class);
+        Post::find($id)->delete();
+        return response('Deleted!', 204);
     }
 }

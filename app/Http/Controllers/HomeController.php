@@ -9,6 +9,11 @@ use Inertia\Inertia;
 
 class HomeController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function dashboard()
     {
         return Inertia::render('Home', [

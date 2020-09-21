@@ -19,16 +19,6 @@ class GroupController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -36,29 +26,13 @@ class GroupController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Group  $group
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Group $group)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Group  $group
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Group $group)
-    {
-        //
+        $this->authorize('user', Group::class);
+        $validatedData = $request->validate([
+            'name' => ['required', 'unique:groups', 'min:3'],
+            'size' => ['integer', 'max:6']
+        ]);
+        Group::create($validatedData);
+        return response('Created!', 201);
     }
 
     /**
@@ -68,9 +42,16 @@ class GroupController extends Controller
      * @param  \App\Models\Group  $group
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Group $group)
-    {
-        //
+    public function update(Request $request, $id)
+    {   
+        $group = Group::find($id);
+        // $this->authorize('update', $group);
+        $validatedData = $request->validate([
+            'name' => ['required', 'unique:groups', 'min:3'],
+            'size' => ['integer', 'max:6']
+        ]);
+        $group->update($validatedData);
+        return response('Updated!', 200);
     }
 
     /**
@@ -79,8 +60,11 @@ class GroupController extends Controller
      * @param  \App\Models\Group  $group
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Group $group)
+    public function destroy($id)
     {
-        //
+        $group = Group::find($id);
+        // $this->authorize('delete', $group);
+        $group->delete();
+        return response('Deleted!', 204);
     }
 }

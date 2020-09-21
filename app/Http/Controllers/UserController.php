@@ -15,39 +15,8 @@ class UserController extends Controller
      */
     public function index()
     {
+        $this->authorize('user', User::class);
         return UserResource::collection(User::all());
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
-    {
-        //
     }
 
     /**
@@ -68,9 +37,16 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
-    {
-        //
+    public function update(Request $request, $id)
+    {   
+        $user = User::find($id);
+        $this->authorize('update', $user);
+        $validatedData = $request->validate([
+            'name' => ['required', 'min:3'],
+            'email' => ['required', 'email', 'unique:users']
+        ]);
+        $user->update($validatedData);
+        return response('Updated!', 200);
     }
 
     /**
@@ -79,8 +55,11 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        $this->authorize('delete', $user);
+        $user->delete();
+        return response('Deleted!', 204);
     }
 }
