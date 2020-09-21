@@ -19,12 +19,6 @@ class UserTest extends TestCase
         ]);
     }
 
-    public function testUserCanViewDashboard()
-    {
-        $this->actingAs(User::find(2))->get('/dashboard')
-            ->assertStatus(200);
-    }
-
     public function testUserCanRetrieveUsers()
     {
         $this->actingAs(User::find(2))->get('/users')
@@ -47,11 +41,6 @@ class UserTest extends TestCase
         $this->actingAs($user)
             ->delete('/users/' . $user->id)
             ->assertStatus(204);
-    }
-
-    public function testGuestRedirectedFromDashboard()
-    {
-        $this->get('/dashboard')->assertStatus(302);
     }
 
     public function testGuestCannotRetrieveUsers()
