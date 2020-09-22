@@ -9,7 +9,7 @@ function Dashboard(props) {
 
     useEffect(()=> {
         dispatch(fetchUsers());
-        dispatch(fetchGroups());
+        // dispatch(fetchGroups());
     }, [refresh]);
 
     return (
