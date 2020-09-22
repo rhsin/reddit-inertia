@@ -8,7 +8,7 @@ function Posts(props) {
     const [group, setGroup] = useState('webdev');
     const [posts, setPosts] = useState([]);
     const url = 'https://www.reddit.com';
-    const urlAPI = 'https://www.localhost.com/';
+    const urlAPI = 'http://localhost:8000/';
 
     useEffect(()=> {
         fetch(url + '/r/' + group + '.json')
@@ -19,7 +19,7 @@ function Posts(props) {
             setPosts(newPosts);
         })
         .catch(err => {
-            console.error('Error: ', err);
+            console.log(err);
         }); 
         dispatch(fetchGroups());
     }, [group]);
@@ -30,11 +30,14 @@ function Posts(props) {
     };
 
     const savePost = (post) => {
-        axios.post(urlAPI, {
+        axios.post(urlAPI + 'posts', {
             title: post.title,
             score: post.score,
             link: post.permalink,
             group_id: groups[1].id
+        })
+        .catch(err => {
+            console.log(err);
         });
     };
 

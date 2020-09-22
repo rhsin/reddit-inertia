@@ -8,7 +8,10 @@ export function fetchUsers() {
         .then(res => dispatch({
             type: 'FETCH_USERS',
             users: res.data.data
-        }));
+        }))
+        .catch(err => {
+            console.log(err);
+        });
     };
 }
 
@@ -18,6 +21,25 @@ export function fetchGroups() {
         .then(res => dispatch({
             type: 'FETCH_GROUPS',
             groups: res.data.data
-        }));
+        }))
+        .catch(err => {
+            console.log(err);
+        });
     };
 }
+
+// const savePost = (post) => {
+//     fetch(urlAPI + 'posts', {
+//         method: 'POST',
+//         headers: {'Content-Type': 'application/json'},
+//         body: JSON.stringify({
+//             title: post.title,
+//             score: post.score,
+//             link: post.permalink,
+//             group_id: groups[1].id
+//         })
+//     })
+//     .catch(err => {
+//         console.error('Error: ', err);
+//     });
+// };
