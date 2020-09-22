@@ -1,16 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { fetchUsers, fetchGroups } from './redux/actions';
 import Posts from './Posts';
 
 function Dashboard(props) {
     const { dispatch, users, groups, posts } = props;
-    const [refresh, setRefresh] = useState(false);
 
     useEffect(()=> {
         dispatch(fetchUsers());
-        // dispatch(fetchGroups());
-    }, [refresh]);
+        dispatch(fetchGroups());
+    }, []);
 
     return (
         <>
@@ -25,14 +24,6 @@ function Dashboard(props) {
                     {item.name}
                 </div> 
             )}
-            {posts != null && posts.map(item =>
-                <div key={item.id}>
-                    {item.title}
-                </div> 
-            )}
-            <button onClick={()=> setRefresh(!refresh)}>
-                Refresh
-            </button>
             <Posts />
         </>
     );
