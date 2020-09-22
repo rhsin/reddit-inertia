@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { fetchUsers, fetchGroups } from './redux/actions';
+import Posts from './Posts';
 
 function Dashboard(props) {
     const { dispatch, users, groups, posts } = props;
@@ -32,6 +33,7 @@ function Dashboard(props) {
             <button onClick={()=> setRefresh(!refresh)}>
                 Refresh
             </button>
+            <Posts />
         </>
     );
 }

@@ -50,7 +50,7 @@ class UserTest extends TestCase
 
     public function testGuestCannotUpdateUser()
     {
-        $user = User::factory()->create();
+        $user = User::latest()->first();
         $this->put('/users/' . $user->id, [
                 'name' => 'John Doe', 'email' => 'john@test.com'
             ])
