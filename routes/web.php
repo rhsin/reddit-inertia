@@ -33,3 +33,7 @@ Route::resources([
 
 Route::get('/dailyposts', [HomeController::class, 'dailyposts']);
 
+Route::post('/attach', [HomeController::class, 'attachGroup']);
+
+Route::post('/detach', [HomeController::class, 'detachGroup']);
+

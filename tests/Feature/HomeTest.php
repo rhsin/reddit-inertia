@@ -20,6 +20,24 @@ class HomeTest extends TestCase
         $this->get('/dashboard')->assertStatus(302);
     }
 
+    public function testUserCanAttachGroup()
+    {
+        $this->actingAs(User::find(2))
+            ->post('/attach', [
+                'group_id' => 2
+            ])
+            ->assertStatus(201);
+    }
+
+    public function testUserCanDetachGroup()
+    {
+        $this->actingAs(User::find(2))
+            ->post('/detach', [
+                'group_id' => 2
+            ])
+            ->assertStatus(204);
+    }
+
     public function testAdminCanSendMailable()
     {
         $this->actingAs(User::find(1))->get('/dailyposts')

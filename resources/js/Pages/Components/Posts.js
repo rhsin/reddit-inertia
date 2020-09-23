@@ -10,8 +10,9 @@ import {
     Stack,
     Box,
     Heading,
-    Text,
-    Badge
+    Tag,
+    Icon,
+    TagLabel
 } from '@chakra-ui/core';
 
 function Posts(props) {
@@ -66,7 +67,7 @@ function Posts(props) {
 
     return (
         <>
-            <div className='bg-green-100'>Posts Component</div>
+            <div className='bg-green-100 mt-4'>Posts Component</div>
             <FormControl>
                 <FormLabel htmlFor='subreddit'>Subreddit</FormLabel>
                 <Select
@@ -83,26 +84,27 @@ function Posts(props) {
             <Stack spacing={3}>
                 {posts.map((item, index) => index < 10 &&
                     <Box
-                        p={5}
+                        p={4}
                         shadow='md'
                         borderWidth='1px'
                         key={item.id}
                     >
-                        <Heading fontSize='lg' mb='2'>
+                        <Heading fontSize='lg' mb='3'>
                             <a href={url + item.permalink}>
                                 {item.title}
                             </a>
                         </Heading>
-                        <Badge variantColor='blue' mr='2'>
-                            <Text fontSize="md">
+                        <Tag variantColor='blue' mr='2'>
+                            <Icon name='up-down' size='12px' mr='1' />
+                            <TagLabel fontSize='sm'>
                                 {item.score.toLocaleString()}
-                            </Text>
-                        </Badge> 
-                        <Badge mr='2'>
-                            <Text fontSize="xs">
+                            </TagLabel>
+                        </Tag> 
+                        <Tag mr='2'>
+                            <TagLabel fontSize='xs'>
                                 {getDate(item.created)}
-                            </Text>
-                        </Badge>
+                            </TagLabel>
+                        </Tag>
                         <Button
                             leftIcon='download'
                             variantColor='teal'

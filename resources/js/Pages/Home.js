@@ -8,7 +8,10 @@ function Home(props) {
     return (
         <Provider store={store}>
             <ThemeProvider>
-                <Dashboard posts={props.posts.data}/>
+                <Dashboard
+                    account={props.account}
+                    posts={props.posts.data}
+                />
             </ThemeProvider>
         </Provider>
     );

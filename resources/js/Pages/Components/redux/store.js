@@ -3,7 +3,8 @@ import thunk from 'redux-thunk';
 
 const initialState = {
     users: [],
-    groups: []
+    groups: [],
+    user: {}
 };
 
 function reducer(state = initialState, action) {
@@ -19,6 +20,11 @@ function reducer(state = initialState, action) {
             return {
                 ...state,
                 groups: action.groups
+            };
+        case 'SET_USER':
+            return {
+                ...state,
+                user: action.user
             };
         default:
             return state;
