@@ -1,11 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { refresh } from './redux/actions';
 import GroupDrawer from './GroupDrawer';
 import { List, ListItem, IconButton, useToast } from '@chakra-ui/core';
 import { Heading } from '@chakra-ui/core';
 
 function GroupPanel(props) {
-    const { groups, refresh } = props;
+    const { dispatch, groups } = props;
 
     const toast = useToast();
 
@@ -25,7 +26,6 @@ function GroupPanel(props) {
                 isClosable: true,
             })
         )
-        .then(()=> refresh())
         .catch(err => {
             toast({
                 position: 'top',
@@ -37,6 +37,7 @@ function GroupPanel(props) {
             }); 
             console.log(err);
         });
+        dispatch(refresh());
     };
 
     return (
@@ -46,7 +47,7 @@ function GroupPanel(props) {
             </Heading>
             <List spacing={2}>
                 {groups != null && groups.map(
-                    (item, index) => index < 2 &&
+                    (item, index) => index < 4 &&
                     <ListItem
                         key={item.id}
                         borderWidth='2px'
@@ -63,7 +64,7 @@ function GroupPanel(props) {
                             mr='2'
                             onClick={()=> attachGroup(item.id)}
                         />
-                        {item.name}
+                        {item.name} - ({item.size.toLocaleString()}k)
                     </ListItem>
                 )}
             </List>

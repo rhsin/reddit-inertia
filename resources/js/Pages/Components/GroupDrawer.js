@@ -1,21 +1,33 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
-import { List, ListItem, IconButton, Box } from '@chakra-ui/core';
+import GroupSearch from './GroupSearch';
+import { List, ListItem, IconButton } from '@chakra-ui/core';
 import { Drawer, DrawerBody, DrawerFooter, DrawerHeader } from '@chakra-ui/core';
 import { DrawerOverlay, DrawerContent, DrawerCloseButton } from '@chakra-ui/core';
-import { Input, Button, useDisclosure,FormControl, FormLabel } from '@chakra-ui/core';
+import { Button, useDisclosure } from '@chakra-ui/core';
 
 function GroupDrawer(props) {
     const { groups, attachGroup } = props;
 
-    const [group, setGroup] = useState('');
+    const [subs, setSubs] = useState([]);
 
     const { isOpen, onOpen, onClose } = useDisclosure();
     const target = useRef();
 
-    const addGroup = () => {
-        console.log(group);
-    };
+    const url ='https://www.reddit.com/subreddits/popular.json'
+    
+    useEffect(()=> {
+        fetch(url)
+        .then(res => res.json())
+        .then(data => {
+            const newSubs = data.data.children
+                .map(item => item.data);
+            setSubs(newSubs);
+        })
+        .catch(err => {
+            console.log(err);
+        }); 
+    }, []);
 
     return (
         <>
@@ -23,7 +35,7 @@ function GroupDrawer(props) {
                 ref={target}
                 variantColor='blue'
                 size='sm'
-                mt='1'   
+                mt='2'   
                 onClick={onOpen}
             >
                 Explore
@@ -56,30 +68,11 @@ function GroupDrawer(props) {
                                         mr='2'
                                         onClick={()=> attachGroup(item.id)}
                                     />
-                                    {item.name}
+                                    {item.name} - ({item.size.toLocaleString()}k)
                                 </ListItem>
                             )}
                         </List>
-                        <Box
-                            p={4}
-                            shadow='md'
-                            borderWidth='1px'
-                            mt='5'
-                        >
-                            <FormControl>
-                                <FormLabel htmlFor='search' mb='1'>
-                                    Add Subreddits
-                                </FormLabel>
-                                <Input
-                                    id='search'
-                                    placeholder='Enter Subreddit...'
-                                    onChange={(e)=> setGroup(e.target.value)}
-                                />
-                                <Button size='sm' mt='2' onClick={()=> addGroup()}>
-                                    Add New
-                                </Button>
-                            </FormControl>
-                        </Box>  
+                        <GroupSearch />
                     </DrawerBody>
                     <DrawerFooter>
                         <Button

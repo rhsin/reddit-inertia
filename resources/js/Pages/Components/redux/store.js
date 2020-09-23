@@ -4,7 +4,8 @@ import thunk from 'redux-thunk';
 const initialState = {
     users: [],
     groups: [],
-    user: {}
+    user: {},
+    render: false
 };
 
 function reducer(state = initialState, action) {
@@ -25,6 +26,11 @@ function reducer(state = initialState, action) {
             return {
                 ...state,
                 user: action.user
+            };
+        case 'RENDER':
+            return {
+                ...state,
+                render: !state.render
             };
         default:
             return state;

@@ -1,22 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { fetchUsers, fetchGroups, fetchAccount } from './redux/actions';
+import { setUser, fetchUsers, fetchGroups, fetchAccount } from './redux/actions';
 import Posts from './Posts';
 import UserPanel from './UserPanel';
 import GroupPanel from './GroupPanel';
 import { SimpleGrid, Box } from '@chakra-ui/core';
 
 function Dashboard(props) {
-    const { dispatch, account, posts } = props;
-
-    const [refresh, setRefresh] = useState(false);
+    const { dispatch, account, render, posts } = props;
 
     useEffect(()=> {
         dispatch(fetchUsers());
         dispatch(fetchGroups());
-        dispatch({type: 'SET_USER', user: account});
+        dispatch(setUser(account));
         dispatch(fetchAccount(account.id))
-    }, [refresh]);
+    }, [render]);
 
     return (
         <>
@@ -26,18 +24,14 @@ function Dashboard(props) {
                     shadow='md'
                     borderWidth='1px'
                 >
-                    <UserPanel
-                        refresh={()=> setRefresh(!refresh)}
-                    />
+                    <UserPanel />
                 </Box>
                 <Box
                     p={4}
                     shadow='md'
                     borderWidth='1px'
                 >
-                    <GroupPanel
-                        refresh={()=> setRefresh(!refresh)}
-                    />
+                    <GroupPanel />
                 </Box>
             </SimpleGrid>
             <Box
@@ -54,7 +48,8 @@ function Dashboard(props) {
 
 function mapStateToProps(state) {
     return {
-        user: state.user
+        user: state.user,
+        render: state.render
     };
 }
 

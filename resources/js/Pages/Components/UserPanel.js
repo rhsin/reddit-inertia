@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { refresh } from './redux/actions';
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/core';
 import { List, ListItem, IconButton, useToast, Heading } from '@chakra-ui/core';
 
 function UserPanel(props) {
-    const { users, user, refresh } = props;
+    const { dispatch, users, user } = props;
 
     const toast = useToast();
 
@@ -24,10 +25,10 @@ function UserPanel(props) {
                 isClosable: true,
             })
         )
-        .then(()=> refresh())
         .catch(err => {
             console.log(err);
         });
+        dispatch(refresh());
     };
 
     return (

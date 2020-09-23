@@ -29,7 +29,7 @@ class GroupController extends Controller
         $this->authorize('user', Group::class);
         $validatedData = $request->validate([
             'name' => ['required', 'unique:groups', 'min:3'],
-            'size' => ['integer', 'max:6']
+            'size' => ['integer']
         ]);
         Group::create($validatedData);
         return response('Created!', 201);

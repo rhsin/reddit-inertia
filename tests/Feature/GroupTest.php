@@ -28,7 +28,7 @@ class GroupTest extends TestCase
     public function testUserCanCreateGroup()
     {
         $this->actingAs(User::find(2))
-            ->post('/groups', ['name' => 'news'])
+            ->post('/groups', ['name' => 'testsub', 'size' => 200])
             ->assertStatus(201);
     }
 
@@ -36,7 +36,7 @@ class GroupTest extends TestCase
     {
         $group = Group::latest()->first();
         $this->actingAs(User::find(2))
-            ->put('/groups/' . $group->id, ['name' => 'pics'])
+            ->put('/groups/' . $group->id, ['name' => 'testedit'])
             ->assertStatus(200);
     }
 
@@ -50,14 +50,14 @@ class GroupTest extends TestCase
 
     public function testGuestCannotCreateGroup()
     {
-        $this->post('/groups', ['name' => 'news'])
+        $this->post('/groups', ['name' => 'testsub', 'size' => 200])
             ->assertStatus(403);
     }
 
     public function testGuestCannotUpdateGroup()
     {
         $group = Group::latest()->first();
-        $this->put('/groups/' . $group->id, ['name' => 'pics'])
+        $this->put('/groups/' . $group->id, ['name' => 'testedit'])
             ->assertStatus(403);
     }
 
