@@ -49,16 +49,26 @@ function UserPanel(props) {
                 <TabPanels mt='3'>
                     {users.map(item => 
                         <TabPanel key={item.id}>
-                            <List spacing={3}>
+                            <List spacing={2}>
                                 {item.groups.map(i =>
-                                    <ListItem key={i.id}>
-                                        <IconButton
-                                            icon='minus'
-                                            variantColor='gray'
-                                            size='xs'
-                                            mr='2'
-                                            onClick={()=> detachGroup(i.id)}
-                                        />
+                                    <ListItem
+                                        key={i.id}
+                                        borderWidth='2px'
+                                        borderRadius='md'
+                                        p={1}
+                                        fontSize='sm'
+                                        width='70%'
+                                    >
+                                        {user.id == item.id && 
+                                            <IconButton
+                                                icon='minus'
+                                                variantColor='red'
+                                                variant='outline'
+                                                size='xs'
+                                                mr='2'
+                                                onClick={()=> detachGroup(i.id)}
+                                            />
+                                        }
                                         {i.name}
                                     </ListItem>
                                 )}

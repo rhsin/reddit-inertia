@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { Stack, Box, Heading, Tag, Icon, TagLabel } from '@chakra-ui/core';
-import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/core";
+import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/core';
 import { Button, useToast } from '@chakra-ui/core';
 
 function Posts(props) {
@@ -11,6 +11,8 @@ function Posts(props) {
     const [group, setGroup] = useState('PS4');
     const [posts, setPosts] = useState([]);
     const [groupId, setGroupId] = useState(null);
+    const [sort, setSort] = useState('');
+    const [limit, setLimit] = useState(10);
 
     const toast = useToast();
 
@@ -18,7 +20,7 @@ function Posts(props) {
     const urlAPI = 'http://localhost:8000/';
 
     useEffect(()=> {
-        fetch(url + '/r/' + group + '/top.json')
+        fetch(url + '/r/' + group + sort + '.json')
         .then(res => res.json())
         .then(data => {
             const newPosts = data.data.children
@@ -28,7 +30,7 @@ function Posts(props) {
         .catch(err => {
             console.log(err);
         }); 
-    }, [group]);
+    }, [group, sort]);
 
     const savePost = (post) => {
         axios.post(urlAPI + 'posts', {
@@ -76,7 +78,7 @@ function Posts(props) {
                 Browse Posts: {group}
             </Heading>
             <Menu>
-                <MenuButton as={Button} rightIcon="chevron-down">
+                <MenuButton as={Button} rightIcon='chevron-down' mr='1'>
                     Subreddit
                 </MenuButton>
                 <MenuList>
@@ -90,8 +92,40 @@ function Posts(props) {
                     )}
                 </MenuList>
             </Menu>
+            <Menu>
+                <MenuButton as={Button} rightIcon='arrow-down' mr='1'>
+                    Show More
+                </MenuButton>
+                <MenuList>
+                    <MenuItem onClick={() => setLimit(10)}>
+                        10
+                    </MenuItem>
+                    <MenuItem onClick={() => setLimit(20)}>
+                        20
+                    </MenuItem>
+                    <MenuItem onClick={() => setLimit(30)}>
+                        All
+                    </MenuItem>
+                </MenuList>
+            </Menu>
+            <Menu>
+                <MenuButton as={Button} rightIcon='triangle-down' mr='1'>
+                    Sort
+                </MenuButton>
+                <MenuList>
+                    <MenuItem onClick={() => setSort('/top')}>
+                        Top
+                    </MenuItem>
+                    <MenuItem onClick={() => setSort('')}>
+                        Rising
+                    </MenuItem>
+                    <MenuItem onClick={() => setSort('/new')}>
+                        New
+                    </MenuItem>
+                </MenuList>
+            </Menu>
             <Stack spacing={3} mt='1'>
-                {posts.map((item, index) => index < 40 &&
+                {posts.map((item, index) => index < limit &&
                     <Box
                         p={4}
                         shadow='md'

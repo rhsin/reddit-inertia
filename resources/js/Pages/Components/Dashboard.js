@@ -4,7 +4,7 @@ import { fetchUsers, fetchGroups, fetchAccount } from './redux/actions';
 import Posts from './Posts';
 import UserPanel from './UserPanel';
 import GroupPanel from './GroupPanel';
-import { SimpleGrid, Box } from "@chakra-ui/core";
+import { SimpleGrid, Box } from '@chakra-ui/core';
 
 function Dashboard(props) {
     const { dispatch, account, posts } = props;

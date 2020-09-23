@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { List, ListItem, IconButton, useToast } from "@chakra-ui/core";
-import { Heading } from "@chakra-ui/core";
+import GroupDrawer from './GroupDrawer';
+import { List, ListItem, IconButton, useToast } from '@chakra-ui/core';
+import { Heading } from '@chakra-ui/core';
 
 function GroupPanel(props) {
     const { groups, refresh } = props;
@@ -43,12 +44,21 @@ function GroupPanel(props) {
             <Heading fontSize='lg' mb='3' ml='1'>
                 Popular Subreddits
             </Heading>
-            <List spacing={3}>
-                {groups != null && groups.map(item =>
-                    <ListItem key={item.id}>
+            <List spacing={2}>
+                {groups != null && groups.map(
+                    (item, index) => index < 2 &&
+                    <ListItem
+                        key={item.id}
+                        borderWidth='2px'
+                        borderRadius='md'
+                        p={1}
+                        fontSize='sm'
+                        width='80%'
+                    >
                         <IconButton
                             icon='add'
                             variantColor='green'
+                            variant='outline'
                             size='xs'
                             mr='2'
                             onClick={()=> attachGroup(item.id)}
@@ -57,6 +67,7 @@ function GroupPanel(props) {
                     </ListItem>
                 )}
             </List>
+            <GroupDrawer attachGroup={id => attachGroup(id)} />
         </>
     );
 }
