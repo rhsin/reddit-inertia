@@ -1,3 +1,7 @@
+// The attachGroup function sends a request to Laravel to insert the group into the users group-list.
+// This is done through Eloquents' attach method for many-to-many relationships (inserts row into pivot table).
+// The useToast hook creates toast alerts which are used conditionally to show success/errors. 
+
 import React from 'react';
 import { connect } from 'react-redux';
 import { refresh } from './redux/actions';
@@ -47,7 +51,7 @@ function GroupPanel(props) {
             </Heading>
             <List spacing={2}>
                 {groups != null && groups.map(
-                    (item, index) => index < 6 &&
+                    (item, index) => index < 5 &&
                     <ListItem
                         key={item.id}
                         borderWidth='2px'

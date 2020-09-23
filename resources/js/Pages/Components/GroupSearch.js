@@ -1,3 +1,6 @@
+// This Modal component takes the addGroup function as a prop (add()), which adds & attaches the subreddit
+// submitted by form to the current user.
+
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { useDisclosure, Button, Modal } from '@chakra-ui/core';

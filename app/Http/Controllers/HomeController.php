@@ -15,6 +15,7 @@ use Inertia\Inertia;
 
 class HomeController extends Controller
 {
+    // Data is passed directly to component as props
     public function dashboard()
     {
         $user = new UserResource(Auth::user());

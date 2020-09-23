@@ -1,3 +1,5 @@
+// This component recieves the authenticated user as a prop (account), passed from Laravel through InertiaJS
+
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { setUser, fetchUsers, fetchGroups, fetchAccount } from './redux/actions';

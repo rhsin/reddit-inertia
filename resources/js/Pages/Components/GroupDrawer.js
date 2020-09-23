@@ -1,3 +1,6 @@
+// Chakra UI Drawer component is basically a side Modal, where I put the top subreddits fetched from Reddit API
+// into Accordion components to save space. 
+
 import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { refresh } from './redux/actions';
@@ -6,7 +9,7 @@ import { List, ListItem, IconButton, useToast, Box } from '@chakra-ui/core';
 import { Drawer, DrawerBody, DrawerFooter, DrawerHeader } from '@chakra-ui/core';
 import { DrawerOverlay, DrawerContent, DrawerCloseButton } from '@chakra-ui/core';
 import { Accordion, AccordionItem, AccordionHeader, Button } from "@chakra-ui/core";
-import {  AccordionPanel, AccordionIcon, useDisclosure } from "@chakra-ui/core";
+import { AccordionPanel, AccordionIcon, useDisclosure } from "@chakra-ui/core";
 
 function GroupDrawer(props) {
     const { dispatch, groups, attachGroup } = props;

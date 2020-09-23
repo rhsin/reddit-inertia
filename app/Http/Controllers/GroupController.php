@@ -15,7 +15,7 @@ class GroupController extends Controller
      */
     public function index()
     {
-        return GroupResource::collection(Group::all());
+        return GroupResource::collection(Group::all()->sortByDesc('size'));
     }
 
     /**

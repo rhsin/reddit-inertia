@@ -1,3 +1,6 @@
+// The current user can add or remove subreddits from their dashboard, which also determines the menu options
+// for the Posts components' subreddit select menu.
+
 import React from 'react';
 import { connect } from 'react-redux';
 import { refresh } from './redux/actions';

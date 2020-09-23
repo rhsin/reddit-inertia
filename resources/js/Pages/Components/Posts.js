@@ -1,3 +1,6 @@
+// This component uses Reddit API to scrape & sort the posts for the given subreddit. The subreddit options
+// are the current users' attached groups.
+
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
@@ -10,7 +13,7 @@ function Posts(props) {
 
     const [group, setGroup] = useState('PS4');
     const [posts, setPosts] = useState([]);
-    const [groupId, setGroupId] = useState(null);
+    const [groupId, setGroupId] = useState(1);
     const [sort, setSort] = useState('');
     const [limit, setLimit] = useState(10);
 
