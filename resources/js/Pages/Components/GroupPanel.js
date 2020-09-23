@@ -47,7 +47,7 @@ function GroupPanel(props) {
             </Heading>
             <List spacing={2}>
                 {groups != null && groups.map(
-                    (item, index) => index < 4 &&
+                    (item, index) => index < 6 &&
                     <ListItem
                         key={item.id}
                         borderWidth='2px'

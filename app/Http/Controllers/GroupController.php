@@ -31,8 +31,8 @@ class GroupController extends Controller
             'name' => ['required', 'unique:groups', 'min:3'],
             'size' => ['integer']
         ]);
-        Group::create($validatedData);
-        return response('Created!', 201);
+        $group = Group::create($validatedData);
+        return response($group->id, 201);
     }
 
     /**

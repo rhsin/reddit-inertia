@@ -1,20 +1,24 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
+import { refresh } from './redux/actions';
 import GroupSearch from './GroupSearch';
-import { List, ListItem, IconButton } from '@chakra-ui/core';
+import { List, ListItem, IconButton, useToast, Box } from '@chakra-ui/core';
 import { Drawer, DrawerBody, DrawerFooter, DrawerHeader } from '@chakra-ui/core';
 import { DrawerOverlay, DrawerContent, DrawerCloseButton } from '@chakra-ui/core';
-import { Button, useDisclosure } from '@chakra-ui/core';
+import { Accordion, AccordionItem, AccordionHeader, Button } from "@chakra-ui/core";
+import {  AccordionPanel, AccordionIcon, useDisclosure } from "@chakra-ui/core";
 
 function GroupDrawer(props) {
-    const { groups, attachGroup } = props;
+    const { dispatch, groups, attachGroup } = props;
 
     const [subs, setSubs] = useState([]);
 
     const { isOpen, onOpen, onClose } = useDisclosure();
     const target = useRef();
+    const toast = useToast();
 
-    const url ='https://www.reddit.com/subreddits/popular.json'
+    const url ='https://www.reddit.com/subreddits/popular.json';
+    const urlAPI = 'http://localhost:8000/groups';
     
     useEffect(()=> {
         fetch(url)
@@ -28,6 +32,36 @@ function GroupDrawer(props) {
             console.log(err);
         }); 
     }, []);
+
+    const addGroup = (item) => {
+        axios.post(urlAPI, {
+            name: item.display_name,
+            size: Math.round(item.subscribers/1000)
+        })
+        .then(res => {res.status == 201 &&
+            toast({
+                position: 'top',
+                title: 'Subreddit Archived!',
+                description: 'We archived this subreddit to our app.',
+                status: 'success',
+                duration: 9000,
+                isClosable: true,
+            });
+            attachGroup(res.data);
+        })
+        .catch(err => {
+            toast({
+                position: 'top',
+                title: 'Not Allowed!',
+                description: 'Cannot archive this subreddit.',
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+            }); 
+            console.log(err);
+        });
+        dispatch(refresh());
+    };
 
     return (
         <>
@@ -52,27 +86,57 @@ function GroupDrawer(props) {
                     <DrawerCloseButton />
                     <DrawerHeader>Browse Subreddits</DrawerHeader>
                     <DrawerBody>
-                        <List spacing={2} mb='2'>
-                            {groups != null && groups.map(item =>
-                                <ListItem
-                                    key={item.id}
-                                    borderWidth='2px'
-                                    borderRadius='md'
-                                    p={1}
-                                    fontSize='sm'
-                                >
-                                    <IconButton
-                                        icon='add'
-                                        variantColor='green'
-                                        size='xs'
-                                        mr='2'
-                                        onClick={()=> attachGroup(item.id)}
+                        <Accordion>
+                            <AccordionItem>
+                                <AccordionHeader>
+                                <Box flex="1" textAlign="left">
+                                    Subreddits 
+                                </Box>
+                                <AccordionIcon />
+                                </AccordionHeader>
+                                <AccordionPanel pb={4}>
+                                    <Subreddits
+                                        subs={subs}
+                                        min={-1}
+                                        max={9}
+                                        add={item => addGroup(item)}
                                     />
-                                    {item.name} - ({item.size.toLocaleString()}k)
-                                </ListItem>
-                            )}
-                        </List>
-                        <GroupSearch />
+                                </AccordionPanel>
+                            </AccordionItem>
+                            <AccordionItem>
+                                <AccordionHeader>
+                                <Box flex="1" textAlign="left">
+                                    See More
+                                </Box>
+                                <AccordionIcon />
+                                </AccordionHeader>
+                                <AccordionPanel pb={4}>
+                                    <Subreddits
+                                        subs={subs}
+                                        min={8}
+                                        max={17}
+                                        add={item => addGroup(item)}
+                                    />
+                                </AccordionPanel>
+                            </AccordionItem>
+                            <AccordionItem>
+                                <AccordionHeader>
+                                <Box flex="1" textAlign="left">
+                                    See More
+                                </Box>
+                                <AccordionIcon />
+                                </AccordionHeader>
+                                <AccordionPanel pb={4}>
+                                    <Subreddits
+                                        subs={subs}
+                                        min={17}
+                                        max={26}
+                                        add={item => addGroup(item)}
+                                    />
+                                </AccordionPanel>
+                            </AccordionItem>
+                        </Accordion>
+                        <GroupSearch add={item => addGroup(item)}/>
                     </DrawerBody>
                     <DrawerFooter>
                         <Button
@@ -86,6 +150,35 @@ function GroupDrawer(props) {
                 </DrawerContent>
             </Drawer>
         </>
+    );
+}
+
+function Subreddits(props) {
+    const { subs, min, max, add } = props;
+
+    return (
+        <List spacing={2} mb='2'>
+            {subs.map((item, index) => (min < index & index < max) &&
+                <ListItem
+                    key={item.id}
+                    borderWidth='2px'
+                    borderRadius='md'
+                    p={1}
+                    fontSize='sm'
+                >
+                    <IconButton
+                        icon='add'
+                        variantColor='green'
+                        size='xs'
+                        mr='2'
+                        onClick={()=> add(item)}
+                    />
+                    {item.display_name} - (
+                        {Math.round(item.subscribers/1000).toLocaleString()}k
+                    )
+                </ListItem>
+            )}
+        </List>
     );
 }
 
