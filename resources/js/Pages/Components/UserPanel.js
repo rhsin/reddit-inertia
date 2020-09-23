@@ -1,18 +1,42 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/core';
+import { List, ListItem, IconButton, useToast, Heading } from '@chakra-ui/core';
 
 function UserPanel(props) {
-    const { users, user } = props;
+    const { users, user, refresh } = props;
+
+    const toast = useToast();
+
+    const url = 'http://localhost:8000/detach';
+
+    const detachGroup = (groupId) => {
+        axios.post(url, {
+            group_id: groupId
+        })
+        .then(res => res.status == 204 &&
+            toast({
+                position: 'top',
+                title: 'Subreddit Removed!',
+                description: 'We removed this subreddit from your account.',
+                status: 'success',
+                duration: 9000,
+                isClosable: true,
+            })
+        )
+        .then(()=> refresh())
+        .catch(err => {
+            console.log(err);
+        });
+    };
 
     return (
         <>
-            <div>
+            <Heading fontSize='lg' mb='3' ml='1'>
                 {user.name}'s Dashboard
-            </div>
+            </Heading>
             <Tabs
                 variant='enclosed-colored'
-                variantColor='blue'
                 size='sm'
             >
                 <TabList>
@@ -22,15 +46,23 @@ function UserPanel(props) {
                         </Tab>
                     )}
                 </TabList>
-                <TabPanels>
+                <TabPanels mt='3'>
                     {users.map(item => 
                         <TabPanel key={item.id}>
-                            <div>{item.email}</div>
-                            {item.groups.map(i => 
-                                <div key={i.id}>
-                                    {i.name}
-                                </div>
-                            )}
+                            <List spacing={3}>
+                                {item.groups.map(i =>
+                                    <ListItem key={i.id}>
+                                        <IconButton
+                                            icon='minus'
+                                            variantColor='gray'
+                                            size='xs'
+                                            mr='2'
+                                            onClick={()=> detachGroup(i.id)}
+                                        />
+                                        {i.name}
+                                    </ListItem>
+                                )}
+                            </List>
                         </TabPanel>
                     )}
                 </TabPanels>

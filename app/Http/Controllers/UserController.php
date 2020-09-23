@@ -20,6 +20,18 @@ class UserController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $this->authorize('user', User::class);
+        return new UserResource(User::find($id));
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\User  $user

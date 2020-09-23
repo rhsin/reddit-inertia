@@ -28,6 +28,19 @@ export function fetchGroups() {
     };
 }
 
+export function fetchAccount(id) {
+    return function(dispatch) {
+        axios.get(url + 'users/' + id)
+        .then(res => dispatch({
+            type: 'SET_USER',
+            user: res.data.data
+        }))
+        .catch(err => {
+            console.log(err);
+        });
+    };
+}
+
 // const savePost = (post) => {
 //     fetch(urlAPI + 'posts', {
 //         method: 'POST',

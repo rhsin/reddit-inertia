@@ -29,6 +29,12 @@ class GroupUserSeeder extends Seeder
             ],
             [
                 'group_id' => 2,
+                'user_id' => 1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'group_id' => 2,
                 'user_id' => 3,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()

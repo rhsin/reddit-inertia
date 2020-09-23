@@ -1,25 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import {
-    FormControl,
-    FormLabel,
-    Button,
-    Select,
-    useToast,
-    Stack,
-    Box,
-    Heading,
-    Tag,
-    Icon,
-    TagLabel
-} from '@chakra-ui/core';
+import { Stack, Box, Heading, Tag, Icon, TagLabel } from '@chakra-ui/core';
+import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/core";
+import { Button, useToast } from '@chakra-ui/core';
 
 function Posts(props) {
-    const { users, groups } = props;
+    const { user, groups } = props;
 
     const [group, setGroup] = useState('PS4');
     const [posts, setPosts] = useState([]);
+    const [groupId, setGroupId] = useState(null);
 
     const toast = useToast();
 
@@ -27,7 +18,7 @@ function Posts(props) {
     const urlAPI = 'http://localhost:8000/';
 
     useEffect(()=> {
-        fetch(url + '/r/' + group + '.json')
+        fetch(url + '/r/' + group + '/top.json')
         .then(res => res.json())
         .then(data => {
             const newPosts = data.data.children
@@ -44,20 +35,34 @@ function Posts(props) {
             title: post.title,
             score: post.score,
             link: post.permalink,
-            group_id: groups[1].id
+            group_id: groupId
         })
-        .then(res => console.log(res))
+        .then(res => res.status == 201 &&
+            toast({
+                position: 'top',
+                title: 'Post Archived!',
+                description: 'We saved this post for you.',
+                status: 'success',
+                duration: 9000,
+                isClosable: true,
+            })
+        )
         .catch(err => {
+            toast({
+                position: 'top',
+                title: 'Not Allowed!',
+                description: 'Cannot save this post.',
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+            }); 
             console.log(err);
         });
-        toast({
-            position: 'top',
-            title: 'Post Archived!',
-            description: 'We saved this post for you',
-            status: 'success',
-            duration: 9000,
-            isClosable: true,
-        });
+    };
+
+    const selectGroup = (item) => {
+        setGroup(item.name);
+        setGroupId(item.id);
     };
 
     const getDate = (time) => {
@@ -67,22 +72,26 @@ function Posts(props) {
 
     return (
         <>
-            <div className='bg-green-100 mt-4'>Posts Component</div>
-            <FormControl>
-                <FormLabel htmlFor='subreddit'>Subreddit</FormLabel>
-                <Select
-                    id='subreddit'
-                    onChange={e => setGroup(e.target.value)}
-                >
-                    {groups.map(item => 
-                        <option value={item.name} key={item.id}>
+            <Heading fontSize='lg' mb='3' ml='1'>
+                Browse Posts: {group}
+            </Heading>
+            <Menu>
+                <MenuButton as={Button} rightIcon="chevron-down">
+                    Subreddit
+                </MenuButton>
+                <MenuList>
+                    {user.groups != null && user.groups.map(item =>    
+                        <MenuItem
+                            key={item.id}
+                            onClick={() => selectGroup(item)}
+                        >
                             {item.name}
-                        </option>
+                        </MenuItem>
                     )}
-                </Select>
-            </FormControl>
-            <Stack spacing={3}>
-                {posts.map((item, index) => index < 10 &&
+                </MenuList>
+            </Menu>
+            <Stack spacing={3} mt='1'>
+                {posts.map((item, index) => index < 40 &&
                     <Box
                         p={4}
                         shadow='md'
@@ -123,7 +132,7 @@ function Posts(props) {
 
 function mapStateToProps(state) {
     return {
-        users: state.users,
+        user: state.user,
         groups: state.groups
     };
 }

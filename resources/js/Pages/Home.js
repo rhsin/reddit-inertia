@@ -9,7 +9,7 @@ function Home(props) {
         <Provider store={store}>
             <ThemeProvider>
                 <Dashboard
-                    account={props.account}
+                    account={props.account.data}
                     posts={props.posts.data}
                 />
             </ThemeProvider>

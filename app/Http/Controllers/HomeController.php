@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\Post as PostResource;
+use App\Http\Resources\User as UserResource;
 use App\Mail\DailyPosts;
 use App\Models\Group;
 use App\Models\Post;
@@ -14,15 +15,11 @@ use Inertia\Inertia;
 
 class HomeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function dashboard()
     {
+        $user = new UserResource(Auth::user());
         return Inertia::render('Home', [
-            'account' => Auth::user(),
+            'account' => $user,
             'posts' => PostResource::collection(Post::all())
         ]);
     }

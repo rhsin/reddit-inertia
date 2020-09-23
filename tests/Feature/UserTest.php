@@ -25,6 +25,12 @@ class UserTest extends TestCase
             ->assertStatus(200);
     }
 
+    public function testUserCanRetrieveUser()
+    {
+        $this->actingAs(User::find(2))->get('/users/1')
+            ->assertStatus(200);
+    }
+
     public function testUserCanUpdateSelf()
     {
         $user = User::factory()->create();
@@ -46,6 +52,11 @@ class UserTest extends TestCase
     public function testGuestCannotRetrieveUsers()
     {
         $this->get('/users')->assertStatus(403);
+    }
+
+    public function testGuestCannotRetrieveUser()
+    {
+        $this->get('/users/1')->assertStatus(403);
     }
 
     public function testGuestCannotUpdateUser()

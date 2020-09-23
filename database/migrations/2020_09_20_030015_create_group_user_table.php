@@ -18,6 +18,7 @@ class CreateGroupUserTable extends Migration
             $table->foreignId('group_id')->constrained('groups');
             $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
+            $table->unique(['group_id', 'user_id']);
         });
     }
 
