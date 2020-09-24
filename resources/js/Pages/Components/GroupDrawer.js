@@ -1,5 +1,6 @@
 // Chakra UI Drawer component is basically a side Modal, where I put the top subreddits fetched from Reddit API
-// into Accordion components to save space. 
+// into Accordion components to save space. The list of subreddits is its own component that is passed the attachGroup function,
+// as well as min, max props to determine which slice of the list to render based on index (first 10 subs, next 9 subs...). 
 
 import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
@@ -30,6 +31,7 @@ function GroupDrawer(props) {
             const newSubs = data.data.children
                 .map(item => item.data);
             setSubs(newSubs);
+            return data
         })
         .catch(err => {
             console.log(err);
@@ -47,7 +49,7 @@ function GroupDrawer(props) {
                 title: 'Subreddit Archived!',
                 description: 'We archived this subreddit to our app.',
                 status: 'success',
-                duration: 9000,
+                duration: 3000,
                 isClosable: true,
             });
             attachGroup(res.data);
@@ -58,7 +60,7 @@ function GroupDrawer(props) {
                 title: 'Not Allowed!',
                 description: 'Cannot archive this subreddit.',
                 status: 'error',
-                duration: 9000,
+                duration: 3000,
                 isClosable: true,
             }); 
             console.log(err);
@@ -72,7 +74,7 @@ function GroupDrawer(props) {
                 ref={target}
                 variantColor='blue'
                 size='sm'
-                mt='2'   
+                mt='1'   
                 onClick={onOpen}
             >
                 Explore
@@ -139,7 +141,7 @@ function GroupDrawer(props) {
                                 </AccordionPanel>
                             </AccordionItem>
                         </Accordion>
-                        <GroupSearch add={item => addGroup(item)}/>
+                        <GroupSearch addGroup={item => addGroup(item)}/>
                     </DrawerBody>
                     <DrawerFooter>
                         <Button

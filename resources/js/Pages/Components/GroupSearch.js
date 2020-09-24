@@ -6,14 +6,52 @@ import { connect } from 'react-redux';
 import { useDisclosure, Button, Modal } from '@chakra-ui/core';
 import { ModalOverlay, ModalContent, ModalHeader } from '@chakra-ui/core';
 import { ModalFooter, ModalBody, ModalCloseButton } from '@chakra-ui/core';
-import { Box, Input, FormControl, FormLabel } from '@chakra-ui/core';
+import { Box, Input, FormControl, FormLabel, useToast } from '@chakra-ui/core';
 
 function GroupSearch(props) {
-    const { add } = props;
+    const { addGroup } = props;
     
     const [group, setGroup] = useState('');
 
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const toast = useToast();
+
+    const url = 'https://www.reddit.com';
+
+    const submitGroup = (name) => {
+        fetch(url + '/r/' + group + '.json')
+        .then(res => { 
+            if (res.ok) {
+                const data = res.json()
+                addGroup({
+                    display_name: name,
+                    subscribers: 200000
+                    // subscribers: data.data.children[1].data.subreddit_subscribers
+                });
+                onClose();
+                return data;
+            } else {
+                toast({
+                    position: 'top',
+                    title: 'Not Found!',
+                    description: 'We cannot find this subreddit.',
+                    status: 'error',
+                    duration: 3000,
+                    isClosable: true,
+                }); 
+            }})
+        .catch(err => {
+            toast({
+                position: 'top',
+                title: 'Not Found!',
+                description: 'We cannot find this subreddit.',
+                status: 'error',
+                duration: 3000,
+                isClosable: true,
+            }); 
+            console.log(err);
+        }); 
+    };
 
     return (
         <>
@@ -44,10 +82,7 @@ function GroupSearch(props) {
                                     size='sm'
                                     variantColor='green'
                                     mt='2'
-                                    onClick={()=> add({
-                                        display_name: group,
-                                        subscribers: 250000 
-                                    })}
+                                    onClick={()=> submitGroup(group)}
                                 >
                                     Add New
                                 </Button>

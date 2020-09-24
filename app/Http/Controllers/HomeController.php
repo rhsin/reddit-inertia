@@ -15,7 +15,8 @@ use Inertia\Inertia;
 
 class HomeController extends Controller
 {
-    // Data is passed directly to component as props
+    // Data is passed directly to component as props, Inertia renders component name-matching
+    // from Pages directory (similar to Laravel view rendering from Views directory)
     public function dashboard()
     {
         $user = new UserResource(Auth::user());
@@ -25,6 +26,7 @@ class HomeController extends Controller
         ]);
     }
 
+    // Attach/Detach Eloquent methods insert/delete row into pivot table (group_user)
     public function attachGroup(Request $request)
     {
         $this->authorize('user');
@@ -41,6 +43,7 @@ class HomeController extends Controller
         return response('Detached!', 204);
     }
 
+    // Function only for testing that mailable can be sent by User 1 (Ryan)
     public function dailyposts()
     {
         $this->authorize('admin');

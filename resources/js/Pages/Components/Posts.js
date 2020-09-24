@@ -29,6 +29,7 @@ function Posts(props) {
             const newPosts = data.data.children
                 .map(item => item.data);
             setPosts(newPosts);
+            return data;
         })
         .catch(err => {
             console.log(err);
@@ -48,7 +49,7 @@ function Posts(props) {
                 title: 'Post Archived!',
                 description: 'We saved this post for you.',
                 status: 'success',
-                duration: 9000,
+                duration: 3000,
                 isClosable: true,
             })
         )
@@ -58,7 +59,7 @@ function Posts(props) {
                 title: 'Not Allowed!',
                 description: 'Cannot save this post.',
                 status: 'error',
-                duration: 9000,
+                duration: 3000,
                 isClosable: true,
             }); 
             console.log(err);
@@ -85,7 +86,7 @@ function Posts(props) {
                     Subreddit
                 </MenuButton>
                 <MenuList>
-                    {user.groups != null && user.groups.map(item =>    
+                    {user.groups && user.groups.map(item =>    
                         <MenuItem
                             key={item.id}
                             onClick={() => selectGroup(item)}

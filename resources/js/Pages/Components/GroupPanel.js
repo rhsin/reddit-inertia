@@ -26,7 +26,7 @@ function GroupPanel(props) {
                 title: 'Subreddit Added!',
                 description: 'We added this subreddit to your account.',
                 status: 'success',
-                duration: 9000,
+                duration: 3000,
                 isClosable: true,
             })
         )
@@ -36,7 +36,7 @@ function GroupPanel(props) {
                 title: 'Not Allowed!',
                 description: 'Cannot add this subreddit.',
                 status: 'error',
-                duration: 9000,
+                duration: 3000,
                 isClosable: true,
             }); 
             console.log(err);
@@ -50,7 +50,7 @@ function GroupPanel(props) {
                 Popular Subreddits
             </Heading>
             <List spacing={2}>
-                {groups != null && groups.map(
+                {groups && groups.map(
                     (item, index) => index < 5 &&
                     <ListItem
                         key={item.id}

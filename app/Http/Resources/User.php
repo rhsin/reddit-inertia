@@ -19,7 +19,7 @@ class User extends JsonResource
             'name' => $this->name,
             'email' => $this->email,
             'created' => $this->created_at,
-            'groups' => $this->groups
+            'groups' => $this->groups()->orderByDesc('size')->get()
         ];
     }
 }
