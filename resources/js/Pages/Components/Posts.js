@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { Stack, Box, Heading, Tag, Icon, TagLabel } from '@chakra-ui/core';
 import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/core';
-import { Button, useToast } from '@chakra-ui/core';
+import { Button, useToast, Link } from '@chakra-ui/core';
 
 function Posts(props) {
     const { user, groups } = props;
@@ -66,9 +66,9 @@ function Posts(props) {
         });
     };
 
-    const selectGroup = (item) => {
-        setGroup(item.name);
-        setGroupId(item.id);
+    const selectGroup = (group) => {
+        setGroup(group.name);
+        setGroupId(group.id);
     };
 
     const getDate = (time) => {
@@ -79,7 +79,22 @@ function Posts(props) {
     return (
         <>
             <Heading fontSize='lg' mb='3' ml='1'>
-                Browse Posts: {group}
+                Browse Posts: 
+                <Button
+                    variant='ghost'
+                    variantColor='blue'
+                    size='lg'
+                    pl={3}
+                >
+                    <Link
+                        href={url + '/r/' + group}
+                        isExternal
+                    >
+                        {group}
+                        <Icon name='external-link' ml='1' mb='2px' />
+                    </Link>
+                </Button>
+       
             </Heading>
             <Menu>
                 <MenuButton as={Button} rightIcon='chevron-down' mr='1'>
@@ -98,7 +113,7 @@ function Posts(props) {
             </Menu>
             <Menu>
                 <MenuButton as={Button} rightIcon='arrow-down' mr='1'>
-                    Show More
+                    Show
                 </MenuButton>
                 <MenuList>
                     <MenuItem onClick={() => setLimit(10)}>
@@ -137,9 +152,12 @@ function Posts(props) {
                         key={item.id}
                     >
                         <Heading fontSize='lg' mb='3'>
-                            <a href={url + item.permalink}>
+                            <Link
+                                href={url + item.permalink}
+                                isExternal
+                            >
                                 {item.title}
-                            </a>
+                            </Link>
                         </Heading>
                         <Tag variantColor='blue' mr='2'>
                             <Icon name='up-down' size='12px' mr='1' />

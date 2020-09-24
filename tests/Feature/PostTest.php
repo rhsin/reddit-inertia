@@ -20,12 +20,19 @@ class PostTest extends TestCase
         ]);
     }
 
+    public function testPostUserDatabase()
+    {
+        $this->assertDatabaseHas('post_user', [
+            'user_id' => 1,
+        ]);
+    }
+
     public function testCanRetrievePosts()
     {
         $this->get('/posts')->assertStatus(200);
     }
 
-    public function testUserCanCreatePost()
+    public function testUserCanCreateAndAttachPost()
     {
         $this->actingAs(User::find(2))
             ->post('/posts', [
@@ -35,6 +42,14 @@ class PostTest extends TestCase
                 'group_id' => 1
             ])
             ->assertStatus(201);
+    }
+
+    public function testUserCanDetachPost()
+    {
+        $post = Post::latest()->first();
+        $this->actingAs(User::find(2))
+            ->post('/detach/posts/' . $post->id)
+            ->assertStatus(204);
     }
 
     public function testAdminCanDeletePost()

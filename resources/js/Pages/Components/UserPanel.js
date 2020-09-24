@@ -6,9 +6,9 @@ import { connect } from 'react-redux';
 import { refresh } from './redux/actions';
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/core';
 import { List, ListItem, IconButton, useToast, Heading } from '@chakra-ui/core';
-import { useDisclosure, Button, Modal, Box } from '@chakra-ui/core';
-import { ModalOverlay, ModalContent, ModalHeader } from '@chakra-ui/core';
-import { ModalFooter, ModalBody, ModalCloseButton } from '@chakra-ui/core';
+import { useDisclosure, Button, ButtonGroup, Modal, Box } from '@chakra-ui/core';
+import { ModalOverlay, ModalContent, ModalHeader, Icon } from '@chakra-ui/core';
+import { ModalFooter, ModalBody, ModalCloseButton, Link } from '@chakra-ui/core';
 
 function UserPanel(props) {
     const { dispatch, users, user } = props;
@@ -16,7 +16,8 @@ function UserPanel(props) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const toast = useToast();
 
-    const url = 'http://localhost:8000/detach';
+    const url = 'http://localhost:8000/detach/groups';
+    const urlProfile = 'http://localhost:8000/profile';
 
     const detachGroup = (groupId) => {
         axios.post(url, {
@@ -81,18 +82,33 @@ function UserPanel(props) {
                                     </ListItem>
                                 )}
                             </List>
+                            {user.id == item.id && 
+                                <ButtonGroup spacing={2}>                
+                                    <Button
+                                        variantColor='blue'
+                                        size='sm'
+                                        onClick={onOpen}
+                                        mt='2'
+                                    >
+                                        See All ({user.groups && user.groups.length})
+                                    </Button>
+                                    <Button
+                                        variantColor='cyan'
+                                        size='sm'
+                                        mt='2'
+
+                                    >
+                                        <Link href={urlProfile}>
+                                            Profile
+                                            <Icon name='link' ml='1' mb='2px' />
+                                        </Link>
+                                    </Button>
+                                </ButtonGroup>
+                            }
                         </TabPanel>
                     )}
                 </TabPanels>
             </Tabs>
-            <Button
-                variantColor='blue'
-                size='sm'
-                onClick={onOpen}
-                mt='1'
-            >
-                See All ({user.groups && user.groups.length})
-            </Button>
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
                 <ModalContent>

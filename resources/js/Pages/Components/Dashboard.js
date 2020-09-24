@@ -15,7 +15,7 @@ function Dashboard(props) {
         dispatch(fetchUsers());
         dispatch(fetchGroups());
         dispatch(setUser(account));
-        dispatch(fetchAccount(account.id))
+        dispatch(fetchAccount(account.id));
     }, [render]);
 
     return (

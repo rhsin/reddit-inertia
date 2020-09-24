@@ -63,4 +63,18 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Models\Group');
     }
+
+    public function posts()
+    {
+        return $this->belongsToMany('App\Models\Post');
+    }
+
+    public function postsInfo()
+    {
+        $posts = $this->posts;
+        foreach ($posts as $post) {
+            $post->group_id = Group::find($post->group_id)->name; 
+        }
+        return $posts;
+    }
 }

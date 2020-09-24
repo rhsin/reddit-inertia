@@ -20,10 +20,21 @@ class HomeTest extends TestCase
         $this->get('/dashboard')->assertStatus(302);
     }
 
+    public function testUserCanViewProfile()
+    {
+        $this->actingAs(User::find(2))->get('/profile')
+            ->assertStatus(200);
+    }
+
+    public function testGuestRedirectedFromProfile()
+    {
+        $this->get('/profile')->assertStatus(302);
+    }
+
     public function testUserCanAttachGroup()
     {
         $this->actingAs(User::find(2))
-            ->post('/attach', [
+            ->post('/attach/groups', [
                 'group_id' => 2
             ])
             ->assertStatus(201);
@@ -32,7 +43,7 @@ class HomeTest extends TestCase
     public function testUserCanDetachGroup()
     {
         $this->actingAs(User::find(2))
-            ->post('/detach', [
+            ->post('/detach/groups', [
                 'group_id' => 2
             ])
             ->assertStatus(204);

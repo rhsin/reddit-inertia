@@ -20,6 +20,13 @@ class GroupTest extends TestCase
         ]);
     }
 
+    public function testGroupUserDatabase()
+    {
+        $this->assertDatabaseHas('group_user', [
+            'user_id' => 1,
+        ]);
+    }
+
     public function testCanRetrieveGroups()
     {
         $this->get('/groups')->assertStatus(200);

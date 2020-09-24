@@ -14,11 +14,11 @@ function GroupPanel(props) {
 
     const toast = useToast();
 
-    const url = 'http://localhost:8000/attach';
+    const url = 'http://localhost:8000/attach/groups';
 
-    const attachGroup = (id) => {
+    const attachGroup = (groupId) => {
         axios.post(url, {
-            group_id: id
+            group_id: groupId
         })
         .then(res => res.status == 201 &&
             toast({

@@ -21,6 +21,7 @@ class Post extends JsonResource
             'score' => $this->score,
             'link' => $this->link,
             'group' => Group::find($this->group_id)->name,
+            'users' => $this->users,
             'created' => $this->created_at,
         ];
     }

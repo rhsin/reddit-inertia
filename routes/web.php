@@ -25,6 +25,10 @@ Route::middleware(['auth:sanctum', 'verified'])
     ->get('/dashboard', [HomeController::class, 'dashboard'])
     ->name('dashboard');
 
+Route::middleware(['auth:sanctum', 'verified'])
+    ->get('/profile', [HomeController::class, 'profile'])
+    ->name('profile');
+
 Route::resources([
     'groups' => GroupController::class,
     'posts' => PostController::class,
@@ -33,7 +37,9 @@ Route::resources([
 
 Route::get('/dailyposts', [HomeController::class, 'dailyposts']);
 
-Route::post('/attach', [HomeController::class, 'attachGroup']);
+Route::post('/attach/groups', [HomeController::class, 'attachGroup']);
 
-Route::post('/detach', [HomeController::class, 'detachGroup']);
+Route::post('/detach/groups', [HomeController::class, 'detachGroup']);
+
+Route::post('/detach/posts/{id}', [HomeController::class, 'detachPost']);
 

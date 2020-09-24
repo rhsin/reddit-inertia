@@ -26,6 +26,14 @@ class HomeController extends Controller
         ]);
     }
 
+    public function profile()
+    {
+        $user = new UserResource(Auth::user());
+        return Inertia::render('Profile', [
+            'account' => $user,
+        ]);
+    }
+
     // Attach/Detach Eloquent methods insert/delete row into pivot table (group_user)
     public function attachGroup(Request $request)
     {
@@ -40,6 +48,14 @@ class HomeController extends Controller
         $this->authorize('user');
         $user = $request->user();
         $user->groups()->detach($request->group_id);
+        return response('Detached!', 204);
+    }
+
+    public function detachPost(Request $request, $id)
+    {
+        $this->authorize('user');
+        $user = $request->user();
+        $user->posts()->detach($id);
         return response('Detached!', 204);
     }
 

@@ -38,10 +38,10 @@ function GroupDrawer(props) {
         }); 
     }, []);
 
-    const addGroup = (item) => {
+    const addGroup = (group) => {
         axios.post(urlAPI, {
-            name: item.display_name,
-            size: Math.round(item.subscribers/1000)
+            name: group.display_name,
+            size: Math.round(group.subscribers/1000)
         })
         .then(res => {res.status == 201 &&
             toast({

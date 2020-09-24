@@ -33,7 +33,9 @@ class PostController extends Controller
             'link' => ['required', 'unique:posts', 'min:5'],
             'group_id' => ['required', 'integer']
         ]);
-        Post::create($validatedData);
+        $post = Post::create($validatedData);
+        $user = $request->user();
+        $user->posts()->attach($post->id);
         return response('Created!', 201);
     }
 
