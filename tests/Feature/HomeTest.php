@@ -49,6 +49,13 @@ class HomeTest extends TestCase
             ->assertStatus(204);
     }
 
+    public function testSubredditsDatabase()
+    {
+        $this->assertDatabaseHas('subreddits', [
+            'name' => 'Home',
+        ]);
+    }
+
     public function testAdminCanSendMailable()
     {
         $this->actingAs(User::find(1))->get('/dailyposts')

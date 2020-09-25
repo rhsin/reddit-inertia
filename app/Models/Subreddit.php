@@ -9,7 +9,9 @@ class Subreddit extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'subreddit'
+    public $timestamps = false;
+
+    protected $guarded = [
+        'name', 'size', 'desc', 'created'
     ];
 }
