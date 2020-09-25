@@ -34,6 +34,11 @@ class HomeController extends Controller
         ]);
     }
 
+    public function subreddits()
+    {
+        return Subreddit::all();
+    }
+
     // Attach/Detach Eloquent methods insert/delete row into pivot table (group_user)
     public function attachGroup(Request $request)
     {

@@ -35,6 +35,8 @@ Route::resources([
     'users' => UserController::class
 ]);
 
+Route::get('/subreddits', [HomeController::class, 'subreddits']);
+
 Route::get('/dailyposts', [HomeController::class, 'dailyposts']);
 
 Route::post('/attach/groups', [HomeController::class, 'attachGroup']);
