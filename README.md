@@ -13,12 +13,12 @@
 ### Dashboard
 The user's dashboard shows the subreddits they are following (and friends), which they can browse posts from and archive them for later use. 
 
-![](/public/Dashboard.png?raw=true)
+![](/public/dashboard.png?raw=true)
 
 
 Users can also open up browse panel to add popular subreddits to their profile, as well as search for new ones. The search will verify if the subreddit exists and return a success or error alert.
 
-![](/public/Browse.png?raw=true) ![](/public/Search.png?raw=true)
+![](/public/browse.png?raw=true) ![](/public/search.png?raw=true)
 
 
 
