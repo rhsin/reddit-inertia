@@ -13,19 +13,27 @@
 ### Dashboard
 The user's dashboard shows the subreddits they are following (and friends), which they can browse posts from and archive them for later use. 
 
-![](/public/dashboard.png?raw=true)
+![](/public/Dashboard.png?raw=true)
 
 
 Users can also open up browse panel to add popular subreddits to their profile, as well as search for new ones. The search will verify if the subreddit exists and return a success or error alert.
 
-![](/public/browse.png?raw=true) ![](/public/search.png?raw=true)
+![](/public/Browse.png?raw=true)
 
+
+![](/public/Search.png?raw=true)
 
 
 ### Profile
 Here the user can view and remove their archived posts.
 
 ![](public/Profile.png?raw=true)
+
+
+### Subreddits Index
+Livewire Component that shows top 100 subreddits and can retrieve more from Reddit API.
+
+![](public/Top100.png?raw=true)
 
 
 ## Mobile support
