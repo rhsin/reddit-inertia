@@ -38,6 +38,17 @@ Livewire Component that shows top 100 subreddits and can retrieve more from Redd
 ![](public/Top100.png?raw=true)
 
 
+## Docker Instructions
+- docker-compose build
+- docker-compose up -d
+- docker-compose exec app composer install
+- docker-compose exec app php artisan key:generate
+- docker-compose exec app php artisan migrate --seed
+- docker-compose run --rm npm install
+- docker-compose run --rm npm run dev
+- Go to (http://localhost:8000/) to register & login
+
+
 ## Mobile support
 This app uses a responsive grid to cater to different devices & sizes. 
 
@@ -55,6 +66,9 @@ This app uses a responsive grid to cater to different devices & sizes.
 ## Testing
 - PHPUnit through Laravel 
 - Jest for React Components
+
+- docker-compose exec app php artisan test
+- docker-compose run --rm npm run jtest
 
 
 ## Contact
