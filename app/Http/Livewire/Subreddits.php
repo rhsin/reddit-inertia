@@ -25,6 +25,11 @@ class Subreddits extends Component
         session()->flash('message', 'New Subreddits Retrieved!');
     }
 
+    public function clear()
+    {
+        $this->subs = [];
+    }
+
     public function render()
     {
         return view('livewire.subreddits', [

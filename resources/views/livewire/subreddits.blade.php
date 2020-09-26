@@ -1,3 +1,4 @@
+
 <div>
     <div style="text-align: left">
         <div style="text-align: end">
@@ -7,6 +8,7 @@
                 </div>
             @endif
             <button wire:click="new">New</button>
+            <button wire:click="clear">Clear</button>
         </div>
         <table>
             <thead>
