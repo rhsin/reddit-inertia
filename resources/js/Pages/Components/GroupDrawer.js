@@ -10,10 +10,10 @@ import { List, ListItem, IconButton, useToast, Box } from '@chakra-ui/core';
 import { Drawer, DrawerBody, DrawerFooter, DrawerHeader } from '@chakra-ui/core';
 import { DrawerOverlay, DrawerContent, DrawerCloseButton } from '@chakra-ui/core';
 import { Accordion, AccordionItem, AccordionHeader, Button } from "@chakra-ui/core";
-import { AccordionPanel, AccordionIcon, useDisclosure } from "@chakra-ui/core";
+import { AccordionPanel, AccordionIcon, useDisclosure, Link, Icon } from "@chakra-ui/core";
 
 function GroupDrawer(props) {
-    const { dispatch, groups, attachGroup } = props;
+    const { dispatch, attachGroup } = props;
 
     const [subs, setSubs] = useState([]);
 
@@ -23,6 +23,7 @@ function GroupDrawer(props) {
 
     const url ='https://www.reddit.com/subreddits/popular.json';
     const urlAPI = 'http://localhost:8000/groups';
+    const urlIndex = 'http://localhost:8000/index';
     
     useEffect(()=> {
         fetch(url)
@@ -79,6 +80,16 @@ function GroupDrawer(props) {
             >
                 Explore
             </Button>
+            <Link
+                href={urlIndex}
+                color='blue.500'
+                ml='2'
+                fontSize='sm'
+                isExternal
+            >
+                Top 100
+                <Icon name="external-link" mx="3px" />
+            </Link>
             <Drawer
                 isOpen={isOpen}
                 placement='right'

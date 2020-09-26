@@ -31,6 +31,17 @@ class HomeTest extends TestCase
         $this->get('/profile')->assertStatus(302);
     }
 
+    public function testUserCanViewIndex()
+    {
+        $this->actingAs(User::find(2))->get('/index')
+            ->assertStatus(200);
+    }
+
+    public function testGuestRedirectedFromIndex()
+    {
+        $this->get('/index')->assertStatus(302);
+    }
+
     public function testUserCanAttachGroup()
     {
         $this->actingAs(User::find(2))

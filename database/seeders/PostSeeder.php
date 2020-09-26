@@ -18,7 +18,7 @@ class PostSeeder extends Seeder
             [
                 'title' => 'assembly developers',
                 'score' => 22495,
-                'link' => 'r/ProgrammerHumor/comments/ivmto5/assembly_developers/',
+                'link' => '/r/ProgrammerHumor/comments/ivmto5/assembly_developers/',
                 'group_id' => 4,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
@@ -34,7 +34,7 @@ class PostSeeder extends Seeder
             [
                 'title' => 'Covid Grows Less Deadly …Practice, Drugs Improve',
                 'score' => 2739,
-                'link' => 'r/Coronavirus/comments/ivtkzn/covid_grows_less_deadly_as_doctors_gain_practice/',
+                'link' => '/r/Coronavirus/comments/ivtkzn/covid_grows_less_deadly_as_doctors_gain_practice/',
                 'group_id' => 3,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()

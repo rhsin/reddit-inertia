@@ -29,11 +29,17 @@ Route::middleware(['auth:sanctum', 'verified'])
     ->get('/profile', [HomeController::class, 'profile'])
     ->name('profile');
 
+Route::middleware(['auth:sanctum', 'verified'])
+    ->get('/index', [HomeController::class, 'index'])
+    ->name('index');
+
 Route::resources([
     'groups' => GroupController::class,
     'posts' => PostController::class,
     'users' => UserController::class
 ]);
+
+Route::get('/subreddits', [HomeController::class, 'subreddits']);
 
 Route::get('/dailyposts', [HomeController::class, 'dailyposts']);
 
