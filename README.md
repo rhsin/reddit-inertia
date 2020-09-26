@@ -16,10 +16,12 @@ The user's dashboard shows the subreddits they are following (and friends), whic
 ![](/public/dashboard.png?raw=true)
 
 
-Users can also open up browse panel to add popular subreddits to their profile, as well as search for new ones. The search will verify if the subreddit exists and return a success or error alert.
+Users can also open up browse panel to add popular subreddits to their profile, as well as search for new ones. 
 
 ![](/public/browse.png?raw=true)
 
+
+The search will verify if the subreddit exists and return a success or error alert.
 
 ![](/public/search.png?raw=true)
 
@@ -37,7 +39,7 @@ Livewire Component that shows top 100 subreddits and can retrieve more from Redd
 
 
 ## Mobile support
-This app uses a responsive grid to cater to differt devices & sizes. 
+This app uses a responsive grid to cater to different devices & sizes. 
 
 
 ## Built with 

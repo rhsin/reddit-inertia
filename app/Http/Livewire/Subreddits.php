@@ -4,10 +4,13 @@ namespace App\Http\Livewire;
 
 use App\Models\Subreddit;
 use Livewire\Component;
+use Livewire\WithPagination;
 use Illuminate\Support\Facades\Http;
 
 class Subreddits extends Component
 {
+    use WithPagination;
+
     public $subs = [];
 
     // Retrieves 10 newest subreddits using Reddit API, sets as component property $subs
@@ -19,12 +22,13 @@ class Subreddits extends Component
             $subreddit = $subreddit['data'];
             array_push($this->subs, $subreddit);
         }
+        session()->flash('message', 'New Subreddits Retrieved!');
     }
 
     public function render()
     {
         return view('livewire.subreddits', [
-            'subreddits' => Subreddit::all()
+            'subreddits' => Subreddit::paginate(20)
         ]); 
     }
 }

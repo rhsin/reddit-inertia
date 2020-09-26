@@ -1,8 +1,11 @@
 <div>
-    Subreddits Livewire Component
-
     <div style="text-align: left">
         <div style="text-align: end">
+            @if (session()->has('message'))
+                <div class="text-green-500">
+                    {{ session('message') }}
+                </div>
+            @endif
             <button wire:click="new">New</button>
         </div>
         <table>
@@ -33,6 +36,7 @@
                         <td>{{ $sub->created }}</td>
                     </tr>
                 @endforeach
+                {{ $subreddits->links() }}
             </tbody>
         </table>
     </div>
