@@ -21,11 +21,6 @@ Users can also open up browse panel to add popular subreddits to their profile, 
 ![](/public/browse.png?raw=true)
 
 
-The search will verify if the subreddit exists and return a success or error alert.
-
-![](/public/search.png?raw=true)
-
-
 ### Profile
 Here the user can view and remove their archived posts.
 
